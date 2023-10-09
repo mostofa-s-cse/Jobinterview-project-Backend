@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\UserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -38,5 +40,11 @@ Route::group([
         Route::post('/refresh', [AuthController::class,'refresh']);
         //Logout route----------------------------------------------------
         Route::post('logout', [AuthController::class,'logout']);
+        
     });
+
 });
+    Route::prefix('v1')->middleware(['auth','isAdmin'])->group(function(){
+    //Get All Employee route----------------------------------------------------
+    Route::get('/getallemployee', [UserController::class, 'getallemployee']);
+    });
