@@ -59,7 +59,7 @@ Route::get('v1/employee-checkIn', [EmployeeActivitiesController::class,'checkIn'
 Route::get('v1/employee-checkOut', [EmployeeActivitiesController::class,'checkOut']);
 Route::get('v1/employee-checkIn-check', [EmployeeActivitiesController::class,'checkIn_check']);
 
-Route::get('/getallemployee', [UserController::class, 'getallemployee']);
+Route::get('v1/getallemployee', [UserController::class, 'getallemployee']);
     Route::prefix('v1')->middleware(['auth','isAdmin'])->group(function(){
     //Get All Employee route----------------------------------------------------
 //    Route::get('/getallemployee', [UserController::class, 'getallemployee']);
