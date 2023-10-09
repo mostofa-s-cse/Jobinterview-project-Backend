@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('employee_activities', function (Blueprint $table) {
             $table->id();
-            $table->string('check_in');
             $table->string('employee_id');
-            $table->string('check_out');
-            $table->string('office_hour');
+            $table->string('check_in');
+            $table->string('check_out')->nullable();
+            $table->string('office_hour')->nullable();
+            $table->string('date');
             $table->timestamps();
         });
     }

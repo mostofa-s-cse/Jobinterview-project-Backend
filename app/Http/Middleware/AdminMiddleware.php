@@ -2,31 +2,36 @@
 
 namespace App\Http\Middleware;
 
+use Auth;
+use JWTAuth;
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
+use function Termwind\renderUsing;
 
 class AdminMiddleware
 {
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
+     * @return mixed
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle($request, Closure $next)
     {
-        if(Auth::check())
-        {
-            if(Auth::user()->role == 'Owner')
-            {
-                return $next($request);
-            }else{
-                return redirect('/')->with('message','Access Denied as you are not Owner');
-            }
-        }else{
-            return redirect('/login')->with('message','Login to Access the website');
+        try {
+            $jwt = JWTAuth::parseToken()->authenticate();
+        } catch (\Tymon\JWTAuth\Exceptions\JWTException $e) {
+            $jwt = false;
         }
-        // return $next($request);
+        if (Auth::check() || $jwt) {
+            $role = auth()->user()->role;
+            if ($role != "Owner") {
+                return response('Unauthorized.', 401);
+            }
+            return $next($request);
+        } else {
+            return response('Unauthorized.', 401);
+        }
     }
 }
