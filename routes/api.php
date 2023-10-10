@@ -23,8 +23,8 @@ Route::group([
     Route::group([
         'prefix' => 'auth'
     ], function ($router) {
-        //Login route----------------->http://127.0.0.1:8000/api/v1/auth/login
-        Route::post('/login', [AuthController::class, 'login']);
+        //Login route----------------->
+        Route::post('/login', [AuthController::class, 'login']); // http://127.0.0.1:8000/api/v1/auth/login
         //login user-profile get route-------------------------------------
         Route::post('me', [AuthController::class,'me']); //http://127.0.0.1:8000/api/v1/auth/me  with bearer token
         //refresh route----------------------------------------------------
@@ -39,7 +39,7 @@ Route::group([
     'prefix' => 'v1/auth',
     'middleware' => 'isAdmin'
 ], function ($router) {
-    Route::get('employee-list', [UserController::class,'getallemployee']); //http://127.0.0.1:8000/api/va1/auth/employee-list with token
+    Route::get('employee-list', [UserController::class,'getallemployee']); //http://127.0.0.1:8000/api/v1/auth/employee-list with token
     Route::post('individual-employee', [UserController::class,'getIndividualEmployee']); //http://127.0.0.1:8000/api/v1/auth/individual-employee with token
     Route::post('search-employee-report', [UserController::class,'searchEmployeeReport']); //http://127.0.0.1:8000/api/v1/auth/search-employee-activities with token
     //register route-----------------------------------------------
@@ -47,19 +47,7 @@ Route::group([
     
 });
 
-
-// Route::group([
-//     'prefix' => 'v1',
-//     'middleware' => 'auth'
-// ], function ($router) {
-//     Route::get('v1/employee-checkIn', [EmployeeActivitiesController::class,'checkIn']);
-//     Route::get('v1/employee-checkOut', [EmployeeActivitiesController::class,'checkOut']);
-//     Route::get('v1/employee-checkIn-check', [EmployeeActivitiesController::class,'checkIn_check']);
-// });
-
-
 // Employee Routes---------------------------------------------------------------------------------------------------
-
 Route::get('v1/employee-checkIn', [EmployeeActivitiesController::class,'checkIn']); //http://127.0.0.1:8000/api/v1/employee-checkIn
 Route::get('v1/employee-checkOut', [EmployeeActivitiesController::class,'checkOut']); //http://127.0.0.1:8000/api/v1/employee-checkOut
 Route::get('v1/employee-checkIn-check', [EmployeeActivitiesController::class,'checkIn_check']); //http://127.0.0.1:8000/api/v1/employee-checkIn-check

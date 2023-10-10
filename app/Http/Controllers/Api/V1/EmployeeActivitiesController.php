@@ -13,7 +13,6 @@ class EmployeeActivitiesController extends Controller
     // function checkIn-------------------------------
     public function checkIn(Request $request)
     {
-
         $exist =  DB::table('employee_activities')
         ->where('employee_id', auth()->user()->id)
         ->where('date', Carbon::now()->toDateString())
