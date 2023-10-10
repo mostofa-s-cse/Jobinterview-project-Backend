@@ -21,6 +21,7 @@ class EmployeeActivitiesController extends Controller
                     'check_in' => Carbon::now()->format('g:i A'),
                     'date' => Carbon::now()->toDateString(),
                     'employee_id' => auth()->user()->id,
+                    'created_at'=>Carbon::now()
                 ]);
 
             return response()->json( [
@@ -44,6 +45,7 @@ class EmployeeActivitiesController extends Controller
             DB::table('employee_activities')
                 ->update([
                     'check_out' => Carbon::now()->format('g:i A'),
+                    'updated_at'=>Carbon::now()
                 ]);
 
             return response()->json( [
@@ -72,12 +74,11 @@ class EmployeeActivitiesController extends Controller
             if ($exist){
                 $data = true;
             }
-
-
             return response()->json( [
                 'success'=>true,
                 'message'=>'Already Exists',
-                'data'=> $data
+                'data'=> $data,
+                'exist'=> $exist
             ], 200);
         } catch (\Exception $e) {
             return response()->json([

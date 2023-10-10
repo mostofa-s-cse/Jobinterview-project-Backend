@@ -27,11 +27,17 @@ class AdminMiddleware
         if (Auth::check() || $jwt) {
             $role = auth()->user()->role;
             if ($role != "Owner") {
-                return response('Unauthorized.', 401);
+                return response()->json([
+                    'success'=>false,
+                    'message'=>'Unauthorized',
+                ], 401);
             }
             return $next($request);
         } else {
-            return response('Unauthorized.', 401);
+            return response()->json([
+                'success'=>false,
+                'message'=>'Unauthorized',
+            ], 401);
         }
     }
 }

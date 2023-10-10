@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 
 class UserController extends Controller
@@ -28,14 +29,53 @@ class UserController extends Controller
     }
 
     
-    public function index()
+    public function getIndividualEmployee(Request $request)
     {
-       // All Product
-       $products = User::all();
-      
-       // Return Json Response
-       return response()->json([
-          'products' => $products
-       ],200);
+        $employeeActivities = DB::table('employee_activities')
+        ->where('employee_id', $request->id)
+        ->get();
+        
+        $employee = User::where('id', $request->id)->get();
+    
+        // $result = User::where('id', $request->id)->get();
+        try {
+            return response()->json( [
+                'success'=>true,
+                'message'=>'All Individual Employee Get Successfully',
+                'data'=> $employeeActivities,
+                'employee'=>$employee
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success'=>false,
+                'message'=>$e->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function searchEmployeeActivities(Request $request)
+    {
+        // $result = DB::table('users as u')
+        // ->where('date', $request->date)
+        // ->leftjoin('employee_activities as e', 'u.id', '=', 'e.employee_id')
+        // ->get(['u.*', 'e.date as date', 'e.check_in as check_in', 'e.check_out as check_out','e.office_hour as office_hour']);
+
+        $result = DB::table('employee_activities as e')
+        ->where('date', $request->date)
+        ->leftjoin('users as u', 'e.employee_id', '=', 'u.id')
+        ->get(['e.*', 'u.name as name']);
+
+        try {
+            return response()->json( [
+                'success'=>true,
+                'message'=>'All Individual Employee Get Successfully',
+                'data'=> $result,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success'=>false,
+                'message'=>$e->getMessage(),
+            ], 500);
+        }
     }
 }
