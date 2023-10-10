@@ -44,6 +44,7 @@ Route::group([
     Route::post('search-employee-activities', [UserController::class,'searchEmployeeActivities']); //http://127.0.0.1:8000/api/v1/auth/search-employee-activities with token
     //register route-----------------------------------------------
     Route::post('register', [AuthController::class, 'register']); //http://127.0.0.1:8000/api/v1/auth/register with token
+    
 });
 
 // Employee Routes---------------------------------------------------------------------------------------------------

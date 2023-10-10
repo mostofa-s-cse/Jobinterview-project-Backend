@@ -13,7 +13,18 @@ class EmployeeActivitiesController extends Controller
     public function checkIn(Request $request)
     {
 
+        $exist =  DB::table('employee_activities')
+        ->where('employee_id', auth()->user()->id)
+        ->where('date', Carbon::now()->toDateString())
+        ->where('check_in','!=', 'null')
+        ->first();
 
+        if($exist){
+            return response()->json( [
+                'success'=>true,
+                'message'=>'Already Exists',
+            ], 200);
+        }
         try {
 
             DB::table('employee_activities')
@@ -36,16 +47,41 @@ class EmployeeActivitiesController extends Controller
             ], 500);
         }
     }
+
+
     public function checkOut(Request $request)
     {
 
+        $employee = DB::table('employee_activities')
+        ->where('employee_id', auth()->user()->id)
+        ->first();
+    
+        $startTime = Carbon::parse($employee->created_at); // Convert to Carbon object
+        $endTime = Carbon::now(); // Carbon::now() already returns a Carbon object
+        $totalTime = $startTime->diff($endTime)->format('%H:%I:%S')." Hours";
+    
+        $exist =  DB::table('employee_activities')
+        ->where('employee_id', auth()->user()->id)
+        ->where('date', Carbon::now()->toDateString())
+        ->where('check_out','!=', 'null')
+        ->first();
+
+        if($exist){
+            return response()->json( [
+                'success'=>true,
+                'message'=>'Already Exists',
+            ], 200);
+        }
 
         try {
 
             DB::table('employee_activities')
+                ->where('employee_id',auth()->user()->id)
+                ->where('date', Carbon::now()->toDateString())
                 ->update([
                     'check_out' => Carbon::now()->format('g:i A'),
-                    'updated_at'=>Carbon::now()
+                    'updated_at'=>Carbon::now(),
+                    'office_hour'=>$totalTime
                 ]);
 
             return response()->json( [

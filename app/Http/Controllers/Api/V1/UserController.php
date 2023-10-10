@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    //function getallemployee-----------------------------------------------------
     public function getallemployee(Request $request)
     {
         $employee = User::where('role', 'Employee')->get();
@@ -27,8 +28,7 @@ class UserController extends Controller
             ], 500);
         }
     }
-
-    
+    //function getIndividualEmployee-----------------------------------------------------
     public function getIndividualEmployee(Request $request)
     {
         $employeeActivities = DB::table('employee_activities')
@@ -36,8 +36,7 @@ class UserController extends Controller
         ->get();
         
         $employee = User::where('id', $request->id)->get();
-    
-        // $result = User::where('id', $request->id)->get();
+
         try {
             return response()->json( [
                 'success'=>true,
@@ -52,14 +51,9 @@ class UserController extends Controller
             ], 500);
         }
     }
-
+    //function function searchEmployeeActivitie-----------------------------------------------------
     public function searchEmployeeActivities(Request $request)
     {
-        // $result = DB::table('users as u')
-        // ->where('date', $request->date)
-        // ->leftjoin('employee_activities as e', 'u.id', '=', 'e.employee_id')
-        // ->get(['u.*', 'e.date as date', 'e.check_in as check_in', 'e.check_out as check_out','e.office_hour as office_hour']);
-
         $result = DB::table('employee_activities as e')
         ->where('date', $request->date)
         ->leftjoin('users as u', 'e.employee_id', '=', 'u.id')
