@@ -41,7 +41,7 @@ Route::group([
 ], function ($router) {
     Route::get('employee-list', [UserController::class,'getallemployee']); //http://127.0.0.1:8000/api/v1/auth/employee-list with token
     Route::post('individual-employee', [UserController::class,'getIndividualEmployee']); //http://127.0.0.1:8000/api/v1/auth/individual-employee with token
-    Route::post('search-employee-report', [UserController::class,'searchEmployeeReport']); //http://127.0.0.1:8000/api/v1/auth/search-employee-activities with token
+    Route::post('search-employee-report', [UserController::class,'searchEmployeeReport']); //http://127.0.0.1:8000/api/v1/auth/search-employee-report with token
     //register route-----------------------------------------------
     Route::post('register', [AuthController::class, 'register']); //http://127.0.0.1:8000/api/v1/auth/register with token
     
