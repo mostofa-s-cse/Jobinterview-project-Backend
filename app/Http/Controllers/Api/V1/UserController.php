@@ -52,7 +52,7 @@ class UserController extends Controller
         }
     }
     //function function searchEmployeeActivitie-----------------------------------------------------
-    public function searchEmployeeActivities(Request $request)
+    public function searchEmployeeReport(Request $request)
     {
         $result = DB::table('employee_activities as e')
         ->where('date', $request->date)

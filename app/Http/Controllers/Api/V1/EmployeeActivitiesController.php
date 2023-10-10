@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class EmployeeActivitiesController extends Controller
 {
+    // function checkIn-------------------------------
     public function checkIn(Request $request)
     {
 
@@ -48,7 +49,7 @@ class EmployeeActivitiesController extends Controller
         }
     }
 
-
+    // function checkOut-------------------------------
     public function checkOut(Request $request)
     {
 
@@ -56,9 +57,9 @@ class EmployeeActivitiesController extends Controller
         ->where('employee_id', auth()->user()->id)
         ->first();
     
-        $startTime = Carbon::parse($employee->created_at); // Convert to Carbon object
-        $endTime = Carbon::now(); // Carbon::now() already returns a Carbon object
-        $totalTime = $startTime->diff($endTime)->format('%H:%I:%S')." Hours";
+        $startTime = Carbon::parse($employee->created_at);
+        $endTime = Carbon::now();
+        $totalTime = $startTime->diff($endTime)->format('%H:%I:%S');
     
         $exist =  DB::table('employee_activities')
         ->where('employee_id', auth()->user()->id)
@@ -96,6 +97,7 @@ class EmployeeActivitiesController extends Controller
             ], 500);
         }
     }
+     // function checkIn_check-------------------------------
     public function checkIn_check(Request $request)
     {
         try {

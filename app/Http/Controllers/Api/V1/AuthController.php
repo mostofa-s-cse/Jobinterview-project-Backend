@@ -32,7 +32,7 @@ class AuthController extends Controller
         $validator = Validator::make( $request->all(), [
             'name'=>'required|string|between:3,15',
             'email'=>'required|email|unique:users',
-            'password'=>'required|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$/',
+            'password'=>'required',
         ] );
         if ( $validator->fails() ) {
             return response()->json( [
