@@ -13,19 +13,21 @@ class EmployeeActivitiesController extends Controller
     // function checkIn-------------------------------
     public function checkIn(Request $request)
     {
-        $exist =  DB::table('employee_activities')
-        ->where('employee_id', auth()->user()->id)
-        ->where('date', Carbon::now()->toDateString())
-        ->where('check_in','!=', 'null')
-        ->first();
-
-        if($exist){
-            return response()->json( [
-                'success'=>true,
-                'message'=>'Already Exists',
-            ], 200);
-        }
+        
         try {
+
+            $exist =  DB::table('employee_activities')
+            ->where('employee_id', auth()->user()->id)
+            ->where('date', Carbon::now()->toDateString())
+            ->where('check_in','!=', 'null')
+            ->first();
+
+            if($exist){
+                return response()->json( [
+                    'success'=>true,
+                    'message'=>'Already Exists',
+                ], 200);
+            }
 
             DB::table('employee_activities')
                 ->insert([
@@ -52,28 +54,28 @@ class EmployeeActivitiesController extends Controller
     public function checkOut(Request $request)
     {
 
-        $employee = DB::table('employee_activities')
-        ->where('employee_id', auth()->user()->id)
-        ->first();
-    
-        $startTime = Carbon::parse($employee->created_at);
-        $endTime = Carbon::now();
-        $totalTime = $startTime->diff($endTime)->format('%H:%I:%S');
-    
-        $exist =  DB::table('employee_activities')
-        ->where('employee_id', auth()->user()->id)
-        ->where('date', Carbon::now()->toDateString())
-        ->where('check_out','!=', 'null')
-        ->first();
-
-        if($exist){
-            return response()->json( [
-                'success'=>true,
-                'message'=>'Already Exists',
-            ], 200);
-        }
-
         try {
+
+            $employee = DB::table('employee_activities')
+            ->where('employee_id', auth()->user()->id)
+            ->first();
+        
+            $startTime = Carbon::parse($employee->created_at);
+            $endTime = Carbon::now();
+            $totalTime = $startTime->diff($endTime)->format('%H:%I:%S');
+        
+            $exist =  DB::table('employee_activities')
+            ->where('employee_id', auth()->user()->id)
+            ->where('date', Carbon::now()->toDateString())
+            ->where('check_out','!=', 'null')
+            ->first();
+
+            if($exist){
+                return response()->json( [
+                    'success'=>true,
+                    'message'=>'Already Exists',
+                ], 200);
+            }
 
             DB::table('employee_activities')
                 ->where('employee_id',auth()->user()->id)

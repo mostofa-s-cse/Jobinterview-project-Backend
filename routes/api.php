@@ -39,15 +39,15 @@ Route::group([
     'prefix' => 'v1/auth',
     'middleware' => 'isAdmin'
 ], function ($router) {
-    Route::get('employee-list', [UserController::class,'getallemployee']); //http://127.0.0.1:8000/api/v1/auth/employee-list with token
-    Route::post('individual-employee', [UserController::class,'getIndividualEmployee']); //http://127.0.0.1:8000/api/v1/auth/individual-employee with token
-    Route::post('search-employee-report', [UserController::class,'searchEmployeeReport']); //http://127.0.0.1:8000/api/v1/auth/search-employee-report with token
+    Route::get('employee-list', [UserController::class,'getallemployee']); //http://127.0.0.1:8000/api/v1/auth/employee-list   with bearer token
+    Route::post('individual-employee', [UserController::class,'getIndividualEmployee']); //http://127.0.0.1:8000/api/v1/auth/individual-employee   with bearer token
+    Route::post('search-employee-report', [UserController::class,'searchEmployeeReport']); //http://127.0.0.1:8000/api/v1/auth/search-employee-report   with bearer token
     //register route-----------------------------------------------
-    Route::post('register', [AuthController::class, 'register']); //http://127.0.0.1:8000/api/v1/auth/register with token
+    Route::post('register', [AuthController::class, 'register']); //http://127.0.0.1:8000/api/v1/auth/register with bearer token
     
 });
 
 // Employee Routes---------------------------------------------------------------------------------------------------
-Route::get('v1/employee-checkIn', [EmployeeActivitiesController::class,'checkIn']); //http://127.0.0.1:8000/api/v1/employee-checkIn     with token
-Route::get('v1/employee-checkOut', [EmployeeActivitiesController::class,'checkOut']); //http://127.0.0.1:8000/api/v1/employee-checkOut     with token
-Route::get('v1/employee-checkIn-check', [EmployeeActivitiesController::class,'checkIn_check']); //http://127.0.0.1:8000/api/v1/employee-checkIn-check   with token
+Route::get('v1/employee-checkIn', [EmployeeActivitiesController::class,'checkIn']); //http://127.0.0.1:8000/api/v1/employee-checkIn     with bearer token
+Route::get('v1/employee-checkOut', [EmployeeActivitiesController::class,'checkOut']); //http://127.0.0.1:8000/api/v1/employee-checkOut     with bearer token
+Route::get('v1/employee-checkIn-check', [EmployeeActivitiesController::class,'checkIn_check']); //http://127.0.0.1:8000/api/v1/employee-checkIn-check   with bearer token

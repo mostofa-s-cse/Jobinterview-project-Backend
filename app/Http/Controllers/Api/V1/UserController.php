@@ -14,8 +14,8 @@ class UserController extends Controller
     //function getallemployee-----------------------------------------------------
     public function getallemployee(Request $request)
     {
-        $employee = User::where('role', 'Employee')->get();
         try {
+            $employee = User::where('role', 'Employee')->get();
             return response()->json( [
                 'success'=>true,
                 'message'=>'All Employee Get Successfully',
@@ -31,13 +31,12 @@ class UserController extends Controller
     //function getIndividualEmployee-----------------------------------------------------
     public function getIndividualEmployee(Request $request)
     {
-        $employeeActivities = DB::table('employee_activities')
-        ->where('employee_id', $request->id)
-        ->get();
-        
-        $employee = User::where('id', $request->id)->get();
-
         try {
+            $employeeActivities = DB::table('employee_activities')
+            ->where('employee_id', $request->id)
+            ->get();
+
+            $employee = User::where('id', $request->id)->get();
             return response()->json( [
                 'success'=>true,
                 'message'=>'All Individual Employee Get Successfully',
@@ -51,15 +50,15 @@ class UserController extends Controller
             ], 500);
         }
     }
-    //function function searchEmployeeActivitie-----------------------------------------------------
+    //function function searchEmployeeActivitie Report-----------------------------------------------------
     public function searchEmployeeReport(Request $request)
     {
-        $result = DB::table('employee_activities as e')
-        ->where('date', $request->date)
-        ->leftjoin('users as u', 'e.employee_id', '=', 'u.id')
-        ->get(['e.*', 'u.name as name']);
-
         try {
+            $result = DB::table('employee_activities as e')
+            ->where('date', $request->date)
+            ->leftjoin('users as u', 'e.employee_id', '=', 'u.id')
+            ->get(['e.*', 'u.name as name']);
+    
             return response()->json( [
                 'success'=>true,
                 'message'=>'All Individual Employee Get Successfully',
