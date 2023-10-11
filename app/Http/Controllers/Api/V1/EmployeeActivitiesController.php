@@ -61,7 +61,7 @@ class EmployeeActivitiesController extends Controller
     
         $startTime = Carbon::parse($employee->created_at);
         $endTime = Carbon::now(); 
-        $totalTime = $startTime->diff($endTime)->format('%H:%i:%s').' Hours';
+        $totalTime = $startTime->diff($endTime)->format('%H:%i:%s');
     
         $exist =  DB::table('employee_activities')
         ->where('employee_id', auth()->user()->id)
